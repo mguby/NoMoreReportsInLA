@@ -8,21 +8,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Parses Monthly_Attendance PDF files.
+ * Parses Powerschool PDF files.
  */
-public class MonthlyAttendanceReportParser {
+public class PowerschoolParser {
 
-    private static HashMap map;
+    private static HashMap<String, String> map;
 
-    public static HashMap parseMonthlyAttendanceReport(String pdf) throws IOException {
-        map = new HashMap();
+    public static HashMap<String, String> parseMonthlyAttendanceReport(String pdf) throws IOException {
+        map = new HashMap<>();
 
         BufferedReader bufReader = new BufferedReader(new StringReader(pdf));
 
-        String line = null;
+        String line;
         boolean studentSection = false;
         boolean clearBuffer = false;
-        int curNum = 1;
         StringBuilder sb = new StringBuilder();
         while ((line = bufReader.readLine()) != null) {
             if(line.contains("1."))
@@ -33,9 +32,8 @@ public class MonthlyAttendanceReportParser {
             }
 
             if(studentSection || clearBuffer) {
-                if(line.substring(0, 1).matches(".*\\d+.*") && line.indexOf(".") < 3 && line.indexOf(".") >=0) {
+                if(line.substring(0, 1).matches(".*\\d+.*") && line.indexOf(".") < 3 && line.contains(".")) {
                     clearBuffer = true;
-                    curNum++;
                 }
 
                 if(clearBuffer) {
@@ -43,8 +41,10 @@ public class MonthlyAttendanceReportParser {
                     sb.setLength(0);
                 }
 
-                if(!line.contains("Grand Totals"))
-                    sb.append(line.replace("\n", "") + " ");
+                if(!line.contains("Grand Totals")) {
+                    String appendLine = line.replace("\n", "") + " ";
+                    sb.append(appendLine);
+                }
             }
             clearBuffer = false;
         }
@@ -57,6 +57,7 @@ public class MonthlyAttendanceReportParser {
         student = student.substring(student.indexOf(".") + 2);
         int id = indexOfStudentID(student);
         String studentName = student.substring(0, id);
+        studentName = trimMiddleName(studentName.trim());
         String nums = student.substring(id);
         int code;
         String attendance;
@@ -82,9 +83,9 @@ public class MonthlyAttendanceReportParser {
             else {
                 attendance = "Present";
             }
-        if(studentName.contains("Newsome, Dejsia") || studentName.contains("Ortega, Se")) {
-            System.out.println(studentName + " " + nums + " " + attendance);
-        }
+            if(studentName.contains("Newsome, Dejsia") || studentName.contains("Ortega, Se")) {
+                System.out.println(studentName + " " + nums + " " + attendance);
+            }
         }
         map.put(studentName.trim(), attendance);
     }
@@ -94,5 +95,23 @@ public class MonthlyAttendanceReportParser {
         Matcher matcher = pattern.matcher(student);
         matcher.find();
         return matcher.start(1);
+    }
+
+    private static String trimMiddleName(String studentName) {
+        int betweenNames = studentName.indexOf(" ");
+        String lastName = studentName.substring(0, betweenNames + 1);
+        String firstName = studentName.substring(studentName.indexOf(" ") + 1);
+        int firstSpace = firstName.indexOf(" ");
+        if(firstSpace != -1) {
+            String middleName = firstName.substring(firstSpace + 1);
+            if(middleName.length() == 1) {
+                return studentName;
+            }
+            else
+                return lastName + firstName.substring(0, firstSpace + 2);
+        }
+        else {
+            return studentName;
+        }
     }
 }
