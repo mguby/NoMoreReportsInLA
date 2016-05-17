@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 /**
  * Parses Impact attendance PDF files
+ * TODO: Turn Abs Unex FD (For charles?)
  */
 public class ImpactParser {
 
@@ -17,12 +18,12 @@ public class ImpactParser {
     }
 
 
-    public HashMap parseIMPACT(String pdf) throws IOException {
-        HashMap map = new HashMap();
+    public HashMap<String, String> parseIMPACT(String pdf) throws IOException {
+        HashMap map = new HashMap<String, String>();
 
         BufferedReader bufReader = new BufferedReader(new StringReader(pdf));
 
-        String line = null;
+        String line;
         while ((line = bufReader.readLine()) != null) {
             if(lineIsStudent(line)) {
                 int attendanceIdx = indexOfAttendance(line.toLowerCase());
