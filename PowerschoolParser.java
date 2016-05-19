@@ -52,15 +52,15 @@ public class PowerschoolParser {
     }
 
     private static boolean isStartOfStudentsOnPage(String line) {
-        return line.contains("1.");
+        return line.contains("1.") || (line.contains(".") && line.matches(".*\\d+.*"));
     }
 
     private static boolean isEndOfStudentsOnPage(String line) {
-        return line.contains("Grand Totals");
+        return line.contains("Grand Totals") || (line.contains("Page") && line.matches(".*\\d+.*"));
     }
 
     private static boolean isNewStudent(String line) {
-        return line.substring(0, 1).matches(".*\\d+.*") && line.indexOf(".") < 3 && line.contains(".");
+        return line.substring(0, 1).matches(".*\\d+.*") && line.indexOf(".") < 5 && line.contains(".");
     }
 
     private static void createStudent(String student) {
@@ -68,6 +68,7 @@ public class PowerschoolParser {
             return;
 
         student = student.substring(student.indexOf(".") + 2);
+
         int id = indexOfStudentID(student);
         String studentName = student.substring(0, id);
         studentName = trimMiddleName(studentName.trim());
