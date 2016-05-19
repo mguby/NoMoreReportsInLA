@@ -10,14 +10,7 @@ import java.util.HashMap;
  */
 public class ImpactParser {
 
-    private String impactSchool;
-
-    public ImpactParser(String school) {
-        impactSchool = school;
-    }
-
-
-    public HashMap<String, String> parseIMPACT(String pdf) throws IOException {
+    public static HashMap<String, String> parseIMPACT(String pdf) throws IOException {
         HashMap<String, String> map = new HashMap<>();
 
         BufferedReader bufReader = new BufferedReader(new StringReader(pdf));
@@ -39,13 +32,12 @@ public class ImpactParser {
         return map;
     }
 
-    private boolean lineIsStudent(String line) {
+    private static boolean lineIsStudent(String line) {
         return !(line.contains(":") || line.contains("Student Name Attendance Comment Change Reason")
-                || line.contains("Dalencia Wells") || line.matches(".*\\d+.*") || line.contains(impactSchool));
-
+                || line.contains("Dalencia Wells") || line.matches(".*\\d+.*") || line.contains("HS"));
     }
 
-    private int indexOfAttendance(String line) {
+    private static int indexOfAttendance(String line) {
         int tardy = line.indexOf("tardy");
         int present = line.indexOf("present");
         int absUnex = line.indexOf("abs unex");
