@@ -6,10 +6,10 @@ import java.util.HashMap;
 public class Main {
 
     // Change date before each run
-    private static final String date = "051816";
+    private static final String date = "052316";
 
     // Change downloadPath before first run
-    private static final String downloadPath = "D:/Downloads/";
+    private static final String downloadPath = "C:/Users/Mark/Google Drive/Attendance/" + date + "/";
 
     private static final String[] schools = {"YCLA", "ADA", "Chatham", "Sullivan", "Latino", "JaneAddams", "CYDI",
             "OHMC", "Truman", "ECA", "CCA", "ASA", "Campos", "Innovations", "WestTown", "WestSide", "APHS", "Charles"};
@@ -38,7 +38,7 @@ public class Main {
 
             String differences = DiscrepancyDetector.getDiscrepancies(impact, mad);
 
-            PrintWriter writer = new PrintWriter(cur + "_" + date + ".txt", "UTF-8");
+            PrintWriter writer = new PrintWriter(downloadPath + cur + "_" + date + ".txt", "UTF-8");
             writer.println(differences);
             writer.close();
         }
