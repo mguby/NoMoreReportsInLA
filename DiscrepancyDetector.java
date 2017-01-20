@@ -1,7 +1,6 @@
 package com.mark.gubatan;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Mark on 5/16/2016.
@@ -11,7 +10,7 @@ public class DiscrepancyDetector {
 
     public static String getDiscrepancies(HashMap<String, String> impact, HashMap<String, String> mad) {
 //        StringBuilder tableDiscrepancies = new StringBuilder();
-        StringBuilder absences = new StringBuilder();
+        List<String> lineList = new ArrayList<String>();
 
         for (Map.Entry<String, String> entry : impact.entrySet()) {
             String student = entry.getKey();
@@ -23,7 +22,7 @@ public class DiscrepancyDetector {
                 if(!val2.equals(val)) {
                     String appendLine = student + " is " + val + " in IMPACT but "
                             + val2 + " in Monthly Attendance Report\n";
-                    absences.append(appendLine);
+                    lineList.add(appendLine);
                 }
             }
             else if(mad.containsKey(studentNoMiddleName)) {
@@ -31,7 +30,7 @@ public class DiscrepancyDetector {
                 if(!val2.equals(val)) {
                     String appendLine = studentNoMiddleName + " is " + val + " in IMPACT but "
                             + val2 + " in Monthly Attendance Report\n";
-                    absences.append(appendLine);
+                    lineList.add(appendLine);
                 }
             }
 //            else {
@@ -48,6 +47,17 @@ public class DiscrepancyDetector {
 //        }
 
 //        return tableDiscrepancies.toString() + absences.toString();
-        return absences.toString();
+        
+//        return absences.toString();
+        return sortAbsensesAlphabetically(lineList);
+    }
+
+    private static String sortAbsensesAlphabetically(List<String> absences) {
+        Collections.sort(absences);
+        StringBuilder sb = new StringBuilder();
+        for(String str : absences) {
+            sb.append(str);
+        }
+        return sb.toString();
     }
 }
