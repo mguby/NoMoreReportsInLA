@@ -22,24 +22,23 @@ public class Main {
     public static void main(String[] args) throws IOException {
         schoolMap.put("500", "YCLA");
         schoolMap.put("504", "Ada McKinley");
-        schoolMap.put("506", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-        schoolMap.put("500", "YCLA");
-
+        schoolMap.put("506", "Chatham");
+        schoolMap.put("520", "Sullivan");
+        schoolMap.put("523", "Latino Youth");
+        schoolMap.put("526", "Jane Addams");
+        schoolMap.put("528", "CYDI");
+        schoolMap.put("529", "Olive Harvey");
+        schoolMap.put("530", "Truman");
+        schoolMap.put("533", "Association House");
+        schoolMap.put("535", "CCA");
+        schoolMap.put("536", "ASA");
+        schoolMap.put("537", "Albizu Campos");
+        schoolMap.put("538", "Innovations");
+        schoolMap.put("543", "West Town");
+        schoolMap.put("544", "Austin");
+        schoolMap.put("545", "Westside");
+        schoolMap.put("547", "Aspira");
+        schoolMap.put("553", "Charles Houston");
 
         final long startTime = System.currentTimeMillis();
         for(Map.Entry<String, String> cur : schoolMap.entrySet()) {
