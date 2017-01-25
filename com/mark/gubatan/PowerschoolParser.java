@@ -108,6 +108,9 @@ public class PowerschoolParser {
             attendance = "Abs Exc HD";
         else if (nums.contains("AEFD"))
             attendance = "Abs Exc FD";
+        else if (nums.contains("HH")) {
+            attendance = "Home/Hosp";
+        }
         else {
             int code;
             if (nums.contains("A"))
