@@ -111,6 +111,12 @@ public class PowerschoolParser {
         else if (nums.contains("HH")) {
             attendance = "Home/Hosp";
         }
+        else if (nums.contains("SUS")) {
+            attendance = "Suspension";
+        }
+        else if (nums.contains("SF")) {
+            attendance = "Schl Func";
+        }
         else {
             int code;
             if (nums.contains("A"))

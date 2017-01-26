@@ -45,6 +45,8 @@ public class ImpactParser {
         int hH = line.indexOf("home/hosp");
         int absExc = line.indexOf("abs exc hd");
         int absExcFd = line.indexOf("abs exc");
-        return Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(present, absUnex), absUnexHD), tardy), hH), absExc), absExcFd);
+        int sf = line.indexOf("schl func");
+        int sus = line.indexOf("suspension");
+        return Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(present, absUnex), absUnexHD), tardy), hH), absExc), absExcFd), sf), sus);
     }
 }
