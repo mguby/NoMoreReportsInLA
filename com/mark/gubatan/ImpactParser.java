@@ -19,7 +19,6 @@ public class ImpactParser {
         while ((line = bufReader.readLine()) != null) {
             if(lineIsStudent(line)) {
                 int attendanceIdx = indexOfAttendance(line.toLowerCase());
-                System.out.println(line);
                 String attendance = line.substring(attendanceIdx);
                 String student = line.substring(0,attendanceIdx - 1);
                 if(attendance.contains("Tardy"))
