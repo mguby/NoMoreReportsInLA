@@ -9,13 +9,15 @@ import java.util.StringJoiner;
 public class Main {
 
     // Change date before each run
-    private static final String date = "011917";
+    private static final String date = "012517";
     private static final String month = "January";
     private static final String schoolYear = "2016-2017";
 
     // Change downloadPath before first run
     private static final String attendance = "TeamingSolution Attendance";
+//    private static final String downloadPath = "D:/Downloads/";
     private static final String downloadPath = "C:/Users/DoomBot/Google Drive/YCCS Campus Data/";
+    private static final String outputPath = "C:/Users/Doombot/1337hacking/";
 
     private static Map<String, String> schoolMap = new HashMap<>();
 
@@ -50,6 +52,7 @@ public class Main {
 
     private static void runReports(String id, String val) {
         String path = downloadPath + id + "- " + val + "/" + attendance + "/" + schoolYear + "/" + month + "/";
+//        String path = downloadPath;
 
         try {
             PDFManager pdfManager = new PDFManager();
@@ -65,7 +68,7 @@ public class Main {
 
             String differences = DiscrepancyDetector.getDiscrepancies(impact, mad);
 
-            PrintWriter writer = new PrintWriter("C:/Users/Doombot/1337hacking/" + val + "_" + date + ".txt", "UTF-8");
+            PrintWriter writer = new PrintWriter(outputPath + val + "_" + date + ".txt", "UTF-8");
             writer.println(differences);
             writer.close();
         }

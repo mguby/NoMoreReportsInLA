@@ -19,6 +19,7 @@ public class ImpactParser {
         while ((line = bufReader.readLine()) != null) {
             if(lineIsStudent(line)) {
                 int attendanceIdx = indexOfAttendance(line.toLowerCase());
+                System.out.println(line);
                 String attendance = line.substring(attendanceIdx);
                 String student = line.substring(0,attendanceIdx - 1);
                 if(attendance.contains("Tardy"))
@@ -43,6 +44,8 @@ public class ImpactParser {
         int absUnex = line.indexOf("abs unex");
         int absUnexHD = line.indexOf("abs unex hd");
         int hH = line.indexOf("home/hosp");
-        return Math.max(Math.max(Math.max(Math.max(present, absUnex), absUnexHD), tardy), hH);
+        int absExc = line.indexOf("abs exc hd");
+        int absExcFd = line.indexOf("abs exc");
+        return Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(present, absUnex), absUnexHD), tardy), hH), absExc), absExcFd);
     }
 }
