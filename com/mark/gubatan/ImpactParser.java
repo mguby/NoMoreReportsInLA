@@ -42,6 +42,7 @@ public class ImpactParser {
         int present = line.indexOf("present");
         int absUnex = line.indexOf("abs unex");
         int absUnexHD = line.indexOf("abs unex hd");
-        return Math.max(Math.max(Math.max(present, absUnex), absUnexHD), tardy);
+        int hH = line.indexOf("home/hosp");
+        return Math.max(Math.max(Math.max(Math.max(present, absUnex), absUnexHD), tardy), hH);
     }
 }
