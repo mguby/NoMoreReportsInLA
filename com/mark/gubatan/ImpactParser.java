@@ -9,6 +9,8 @@ import java.util.HashMap;
  * Parses Impact attendance PDF files
  */
 public class ImpactParser {
+    private static String[] attendanceCodes = {"tardy", "present", "abs unex", "abs unex hd", "home/hosp", "abs exc hd",
+                                                "abs exc", "schl func", "suspension"};
 
     public static HashMap<String, String> parseIMPACT(String pdf) throws IOException {
         HashMap<String, String> map = new HashMap<>();
@@ -38,15 +40,12 @@ public class ImpactParser {
     }
 
     private static int indexOfAttendance(String line) {
-        int tardy = line.indexOf("tardy");
-        int present = line.indexOf("present");
-        int absUnex = line.indexOf("abs unex");
-        int absUnexHD = line.indexOf("abs unex hd");
-        int hH = line.indexOf("home/hosp");
-        int absExc = line.indexOf("abs exc hd");
-        int absExcFd = line.indexOf("abs exc");
-        int sf = line.indexOf("schl func");
-        int sus = line.indexOf("suspension");
-        return Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(Math.max(present, absUnex), absUnexHD), tardy), hH), absExc), absExcFd), sf), sus);
+        int max = -1;
+        for(String code : attendanceCodes) {
+            int cur = line.indexOf(code);
+            if (cur > max)
+                max = cur;
+        }
+        return max;
     }
 }

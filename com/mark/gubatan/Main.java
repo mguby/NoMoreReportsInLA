@@ -18,6 +18,7 @@ public class Main {
 //    private static final String downloadPath = "D:/Downloads/";
     private static final String downloadPath = "C:/Users/DoomBot/Google Drive/YCCS Campus Data/";
     private static final String outputPath = "C:/Users/Doombot/1337hacking/";
+//    private static final String outputPath = downloadPath;
 
     private static Map<String, String> schoolMap = new HashMap<>();
 
