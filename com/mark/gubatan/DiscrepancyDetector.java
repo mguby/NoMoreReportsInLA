@@ -8,12 +8,12 @@ import java.util.*;
  */
 public class DiscrepancyDetector {
 
-    public static String getDiscrepancies(HashMap<String, String> impact, HashMap<String, String> mad) {
+    public static String getDiscrepancies(HashMap<String, String> impact, HashMap<String, String> mad, String date) {
         List<String> lineList = new ArrayList<String>();
         Set<String> missingStudents = new HashSet<>();
 
         for (Map.Entry<String, String> entry : impact.entrySet()) {
-            String line = getDiscrepancyLine(entry, mad, missingStudents,"IMPACT", "Monthly Attendance");
+            String line = getDiscrepancyLine(entry, mad, missingStudents, date, true);
             if(line != null) {
                 lineList.add(line);
                 missingStudents.add(entry.getKey());
@@ -21,7 +21,7 @@ public class DiscrepancyDetector {
         }
 
         for (Map.Entry<String, String> entry : mad.entrySet()) {
-            String line = getDiscrepancyLine(entry, impact, missingStudents,"Monthly Attendance", "IMPACT");
+            String line = getDiscrepancyLine(entry, impact, missingStudents, date, false);
             if(line != null) {
                 lineList.add(line);
                 missingStudents.add(entry.getKey());
@@ -32,7 +32,7 @@ public class DiscrepancyDetector {
     }
 
     private static String getDiscrepancyLine(Map.Entry<String, String> entry, HashMap<String, String> destStudentMap,
-                                             Set<String> missingStudents, String srcName, String destName) {
+                                             Set<String> missingStudents, String date, boolean isEntryImpact) {
         String student = entry.getKey();
         String studentNoMiddleName = student.substring(0, student.length() - 2);
         String val = entry.getValue();
@@ -40,8 +40,20 @@ public class DiscrepancyDetector {
         if((checkDiscrepancy(destStudentMap, student, val) && !missingStudents.contains(student)) ||
                 (checkDiscrepancy(destStudentMap, studentNoMiddleName, val) && !missingStudents.contains(student))) {
             String val2 = destStudentMap.get(student);
-            String line = student + " is " + val + " in " + srcName + " but "
-                    + val2 + " in " + destName + "\n";
+            if(val2 == null) {
+                return "";
+            }
+            String lastName = student.substring(0, student.indexOf(","));
+            String firstName = student.substring(student.indexOf(' ') + 1);
+//            String line = student + " is " + val + " in " + srcName + " but "
+//                    + val2 + " in " + destName + "\n";
+            String line = lastName + "," + firstName + ", ," + date;
+            if(isEntryImpact) {
+                line = line + "," + val + "," + val2 + '\n';
+            }
+            else {
+                line = line + "," + val2 + "," + val + '\n';
+            }
             return line;
         }
         return null;

@@ -25,8 +25,8 @@ public class ImpactParser {
                 String student = line.substring(0,attendanceIdx - 1);
                 if(attendance.contains("Tardy"))
                     attendance = "Present";
-                if(attendance.contains("Abs Unex FD"))
-                    attendance = "Abs Unex";
+//                if(attendance.contains("Abs Unex FD"))
+//                    attendance = "Abs Unex";
                 map.put(student.trim(), attendance);
             }
         }

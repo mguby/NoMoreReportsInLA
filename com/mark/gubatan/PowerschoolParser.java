@@ -134,7 +134,7 @@ public class PowerschoolParser {
     private static String getAttendanceFromAbsenceValue(String abs) {
         String attendance;
         if (abs.contains("1.0"))
-            attendance = "Abs Unex";
+            attendance = "Abs Unex FD";
         else if (abs.contains("0.5"))
             attendance = "Abs Unex HD";
         else

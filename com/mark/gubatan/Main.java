@@ -9,8 +9,8 @@ import java.util.StringJoiner;
 public class Main {
 
     // Change date before each run
-    private static final String date = "012517";
-    private static final String month = "January";
+    private static final String date = "020217";
+    private static final String month = "Febuary";
     private static final String schoolYear = "2016-2017";
 
     // Change downloadPath before first run
@@ -67,9 +67,13 @@ public class Main {
             String madPDF = pdfManager.ToText();
             HashMap<String, String> mad = PowerschoolParser.parseMonthlyAttendanceReport(madPDF);
 
-            String differences = DiscrepancyDetector.getDiscrepancies(impact, mad);
+            String dateMo = date.substring(0, 2);
+            String dateDay = date.substring(2, 4);
+            String dateYr = date.substring(4);
+            String dateXD = dateMo + "/" + dateDay + "/" + dateYr;
+            String differences = DiscrepancyDetector.getDiscrepancies(impact, mad, dateXD);
 
-            PrintWriter writer = new PrintWriter(outputPath + val + "_" + date + ".txt", "UTF-8");
+            PrintWriter writer = new PrintWriter(outputPath + val + "_" + date + ".csv", "UTF-8");
             writer.println(differences);
             writer.close();
         }
