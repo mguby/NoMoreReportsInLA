@@ -37,26 +37,26 @@ public class DiscrepancyDetector {
         String studentNoMiddleName = student.substring(0, student.length() - 2);
         String val = entry.getValue();
 
-        if((checkDiscrepancy(destStudentMap, student, val) && !missingStudents.contains(student)) ||
-                (checkDiscrepancy(destStudentMap, studentNoMiddleName, val) && !missingStudents.contains(student))) {
-            String val2 = destStudentMap.get(student);
-            if(val2 == null) {
-                return "";
-            }
-            String lastName = student.substring(0, student.indexOf(","));
-            String firstName = student.substring(student.indexOf(' ') + 1);
-//            String line = student + " is " + val + " in " + srcName + " but "
-//                    + val2 + " in " + destName + "\n";
-            String line = lastName + "," + firstName + ", ," + date;
-            if(isEntryImpact) {
-                line = line + "," + val + "," + val2 + '\n';
-            }
-            else {
-                line = line + "," + val2 + "," + val + '\n';
-            }
-            return line;
+        if((checkDiscrepancy(destStudentMap, student, val) && !missingStudents.contains(student)))
+            return getDiscrepancyLine(destStudentMap, date, isEntryImpact, student, val);
+        if (checkDiscrepancy(destStudentMap, studentNoMiddleName, val) && !missingStudents.contains(studentNoMiddleName)) {
+            return getDiscrepancyLine(destStudentMap, date, isEntryImpact, studentNoMiddleName, val);
         }
         return null;
+    }
+
+    private static String getDiscrepancyLine(HashMap<String, String> destStudentMap, String date, boolean isEntryImpact, String student, String val) {
+        String val2 = destStudentMap.get(student);
+        String lastName = student.substring(0, student.indexOf(","));
+        String firstName = student.substring(student.indexOf(' ') + 1);
+        String line = lastName + "," + firstName + ", ," + date;
+        if(isEntryImpact) {
+            line = line + "," + val + "," + val2 + '\n';
+        }
+        else {
+            line = line + "," + val2 + "," + val + '\n';
+        }
+        return line;
     }
 
     private static boolean checkDiscrepancy(HashMap<String, String> studentMap, String student, String val) {
