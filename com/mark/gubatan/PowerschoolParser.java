@@ -52,7 +52,7 @@ public class PowerschoolParser {
     }
 
     private static boolean isStartOfStudentsOnPage(String line) {
-        return line.contains("1.") || (line.contains(".") && line.matches(".*\\d+.*"));
+        return line.contains("1.") || (line.contains(".") && line.matches(".*\\d+.*")) && !line.contains(":");
     }
 
     private static boolean isEndOfStudentsOnPage(String line) {
@@ -88,18 +88,23 @@ public class PowerschoolParser {
     }
 
     private static String trimMiddleName(String studentName) {
-        int betweenLastFirstNames = studentName.indexOf(" ");
-        String lastName = studentName.substring(0, betweenLastFirstNames + 1);
-        String firstName = studentName.substring(betweenLastFirstNames + 1);
+        int betweenLastFirstNames = studentName.indexOf(",");
+        try { //TODO fix names spread across multiple lines?
+            String lastName = studentName.substring(0, betweenLastFirstNames);
+            String firstName = studentName.substring(betweenLastFirstNames + 2);
 
-        int spaceBetweenFirstMiddleNames = firstName.indexOf(" ");
-        if(spaceBetweenFirstMiddleNames != -1) {
-            String middleName = firstName.substring(spaceBetweenFirstMiddleNames + 1);
-            if(middleName.length() != 1)
-                return lastName + firstName.substring(0, spaceBetweenFirstMiddleNames + 2);
+            int spaceBetweenFirstMiddleNames = firstName.indexOf(" ");
+            if (spaceBetweenFirstMiddleNames != -1) {
+                String middleName = firstName.substring(spaceBetweenFirstMiddleNames + 1);
+                if (middleName.length() != 1)
+                    return lastName + firstName.substring(0, spaceBetweenFirstMiddleNames + 2);
+            }
+
+            return studentName;
         }
-
-        return studentName;
+        catch(StringIndexOutOfBoundsException e) {
+            return "XD";
+        }
     }
 
     private static String getAttendance(String nums) {

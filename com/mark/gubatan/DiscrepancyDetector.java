@@ -48,7 +48,7 @@ public class DiscrepancyDetector {
     private static String getDiscrepancyLine(HashMap<String, String> destStudentMap, String date, boolean isEntryImpact, String student, String val) {
         String val2 = destStudentMap.get(student);
         String lastName = student.substring(0, student.indexOf(","));
-        String firstName = student.substring(student.indexOf(' ') + 1);
+        String firstName = student.substring(student.indexOf(',') + 2);
         String line = lastName + "," + firstName + ", ," + date;
         if(isEntryImpact) {
             line = line + "," + val + "," + val2 + '\n';
