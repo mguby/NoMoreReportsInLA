@@ -48,6 +48,7 @@ public class PowerschoolParser {
             }
             shouldCreateNewStudent = false;
         }
+        System.out.println(map);
         return map;
     }
 

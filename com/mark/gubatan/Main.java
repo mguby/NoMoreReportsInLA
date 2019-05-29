@@ -3,15 +3,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.StringJoiner;
 
 public class Main {
 
     // Change date before each run
-    private static final String date = "020217";
-    private static final String month = "Febuary";
-    private static final String schoolYear = "2016-2017";
+    private static final String date = "052819";
+    private static final String month = "May";
+    private static final String schoolYear = "2018-2019";
 
     // Change downloadPath before first run
     private static final String attendance = "TeamingSolution Attendance";
@@ -58,9 +56,11 @@ public class Main {
         try {
             PDFManager pdfManager = new PDFManager();
             //IMPACT
-            pdfManager.setFilePath(path + "Impact/IMPACT_" + val.replaceAll("\\s+","") + "_" + date + ".pdf");
-            String impactPDF = pdfManager.ToText();
-            HashMap<String, String> impact = ImpactParser.parseIMPACT(impactPDF);
+//            pdfManager.setFilePath(path + "Impact/IMPACT_" + val.replaceAll("\\s+","") + "_" + date + ".pdf");
+//            String impactPDF = pdfManager.ToText();
+//            HashMap<String, String> impact = ImpactParser.parseIMPACT(impactPDF);
+            HashMap<String, String> impact = ImpactCsvParser.parseIMPACT(path + "Impact/IMPACT_" + val.replaceAll("\\s+","") + "_" + date + ".csv");
+
 
             //POWER SCHOOL
             pdfManager.setFilePath(path + "PowerSchool/Monthly_Attendance_" + val.replaceAll("\\s+","") + "_" + date + ".pdf");
