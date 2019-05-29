@@ -59,7 +59,7 @@ public class Main {
 //            pdfManager.setFilePath(path + "Impact/IMPACT_" + val.replaceAll("\\s+","") + "_" + date + ".pdf");
 //            String impactPDF = pdfManager.ToText();
 //            HashMap<String, String> impact = ImpactParser.parseIMPACT(impactPDF);
-            HashMap<String, String> impact = ImpactCsvParser.parseIMPACT(path + "Impact/IMPACT_" + val.replaceAll("\\s+","") + "_" + date + ".csv");
+            HashMap<String, String> aspen = AspenCsvParser.parseIMPACT(path + "Aspen/ASPEN_" + val.replaceAll("\\s+","") + "_" + date + ".csv");
 
 
             //POWER SCHOOL
@@ -71,7 +71,7 @@ public class Main {
             String dateDay = date.substring(2, 4);
             String dateYr = date.substring(4);
             String dateXD = dateMo + "/" + dateDay + "/" + dateYr;
-            String differences = DiscrepancyDetector.getDiscrepancies(impact, mad, dateXD);
+            String differences = DiscrepancyDetector.getDiscrepancies(aspen, mad, dateXD);
 
             PrintWriter writer = new PrintWriter(outputPath + val + "_" + date + ".csv", "UTF-8");
             writer.println(differences);

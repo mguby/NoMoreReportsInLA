@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
-enum ImpactCsvParser {
+enum AspenCsvParser {
     ;
 
     private static final HashMap<String, String> ATTENDENCE_CODES = new HashMap<>();
