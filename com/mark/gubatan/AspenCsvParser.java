@@ -14,13 +14,13 @@ enum AspenCsvParser {
     static
     {
         ATTENDENCE_CODES.put("P", "Present");
-        ATTENDENCE_CODES.put("AE-HD", "Abs Exc HD");
+        ATTENDENCE_CODES.put("A-E HD", "Abs Exc HD");
         ATTENDENCE_CODES.put("A-E", "Abs Exc FD");
         ATTENDENCE_CODES.put("HH", "Home/Hosp");
         ATTENDENCE_CODES.put("SUS", "Suspension");
         ATTENDENCE_CODES.put("SF", "Schl Func");
         ATTENDENCE_CODES.put("A", "Abs Unex");
-        ATTENDENCE_CODES.put("AUHD", "Abs Unex HD");
+        ATTENDENCE_CODES.put("A HD", "Abs Unex HD");
     }
 
     static HashMap<String, String> parseIMPACT(String path) throws IOException {
