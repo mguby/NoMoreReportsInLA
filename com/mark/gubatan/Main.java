@@ -1,15 +1,19 @@
 package com.mark.gubatan;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
 
     // Change date before each run
-    private static final String date = "052819";
-    private static final String month = "May";
     private static final String schoolYear = "2018-2019";
+    private static final String startDate = "040919";
+    private static final String endDate = "052419";
 
     // Change downloadPath before first run
     private static final String attendance = "TeamingSolution Attendance";
@@ -19,8 +23,9 @@ public class Main {
 //    private static final String outputPath = downloadPath;
 
     private static Map<String, String> schoolMap = new HashMap<>();
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MMddyy");
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         schoolMap.put("500", "YCLA");
         schoolMap.put("504", "Ada McKinley");
         schoolMap.put("506", "Chatham");
@@ -42,14 +47,23 @@ public class Main {
         schoolMap.put("553", "Charles Houston");
 
         final long startTime = System.currentTimeMillis();
-        for(Map.Entry<String, String> cur : schoolMap.entrySet()) {
-            runReports(cur.getKey(), cur.getValue());
+        LocalDate myEndDate = LocalDate.parse(endDate, DATE_FORMATTER).plusDays(1);
+        LocalDate aDate = LocalDate.parse(startDate, DATE_FORMATTER);
+        while (!aDate.equals(myEndDate))
+        {
+            String month = aDate.getMonth().name().toLowerCase();
+            month = month.substring(0, 1).toUpperCase() + month.substring(1);
+            for(Map.Entry<String, String> cur : schoolMap.entrySet()) {
+                runReports(cur.getKey(), cur.getValue(), aDate.format(DATE_FORMATTER), month);
+            }
+            aDate = aDate.plusDays(1);
         }
+
         final long endTime = System.currentTimeMillis();
         System.out.println("Execution finished in: " + ((endTime - startTime)/1000.0) + " seconds.");
     }
 
-    private static void runReports(String id, String val) {
+    private static void runReports(String id, String val, String date, String month) {
         String path = downloadPath + id + "- " + val + "/" + attendance + "/" + schoolYear + "/" + month + "/";
 //        String path = downloadPath;
 
@@ -59,8 +73,7 @@ public class Main {
 //            pdfManager.setFilePath(path + "Impact/IMPACT_" + val.replaceAll("\\s+","") + "_" + date + ".pdf");
 //            String impactPDF = pdfManager.ToText();
 //            HashMap<String, String> impact = ImpactParser.parseIMPACT(impactPDF);
-            HashMap<String, String> aspen = AspenCsvParser.parseIMPACT(path + "Aspen/ASPEN_" + val.replaceAll("\\s+","") + "_" + date + ".csv");
-
+            HashMap<String, String> aspen = AspenCsvParser.parseIMPACT(path + "Impact/ASPEN_" + val.replaceAll("\\s+","") + "_" + date + ".csv");
 
             //POWER SCHOOL
             pdfManager.setFilePath(path + "PowerSchool/Monthly_Attendance_" + val.replaceAll("\\s+","") + "_" + date + ".pdf");
