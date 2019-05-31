@@ -33,11 +33,13 @@ enum AspenCsvParser {
             line = line.replace("\"", "");
             line = line.trim();
             String[] columns = line.split(splitter);
-            String student = columns[1] + ", " + columns[0];
-            String attendanceCode = ATTENDENCE_CODES.get(columns[3]);
-            studentsToAttendance.put(student.trim(), attendanceCode);
+            if (columns.length == 5)
+            {
+                String student = columns[0] + "," + columns[1];
+                String attendanceCode = ATTENDENCE_CODES.get(columns[3]);
+                studentsToAttendance.put(student.trim(), attendanceCode);
+            }
         }
-        System.out.println(studentsToAttendance);
         return studentsToAttendance;
     }
 }
